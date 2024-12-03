@@ -2,29 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : MonoBehaviour
+public class Item
 {
-  [SerializeField]
-  private string ItemName;
-  [SerializeField]
-  private int Quantity;
-  [SerializeField]
-  private Sprite SpriteItem;
-
-  private InventoryManager inventoryManager;
+  public string ItemName { get; set; }
+  public int Quantity { get; set; }
   
-  void Start()
+  public Item(string itemName, int quantity)
   {
-    inventoryManager = GameObject.Find("UI_Canvas").GetComponent<InventoryManager>();
-  }
-
-  private void OnCollisionEnter( Collision collision )
-  {
-    if ( collision.gameObject.tag.Equals("Player"))
-    {
-      //inventoryManager.AddItem(ItemName, Quantity, SpriteItem);
-      Debug.Log($"{ItemName}, {Quantity}");
-      Destroy(gameObject);
-    }
+    ItemName = itemName;
+    Quantity = quantity;
   }
 }

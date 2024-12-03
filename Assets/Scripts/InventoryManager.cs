@@ -1,3 +1,4 @@
+using Inventario;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,7 @@ public class InventoryManager : MonoBehaviour
   private Sprite img1;
   private Image imageSlot;
 
+  private void Awake() => Inventory.AddItemToForce();
   void Start()
   {
     MenuActivated = false;
@@ -29,8 +31,13 @@ public class InventoryManager : MonoBehaviour
     }
     else if (Input.GetButtonDown("Inventory") && !MenuActivated)
     {
+      UpdateInventoryUi();
       InventoryMenu.SetActive(true);
       MenuActivated = true;
+    }
+
+    if (Input.GetButtonDown("ShowInventory")) {
+      Inventory.ShowInventoryConsole();
     }
   }
 
@@ -49,13 +56,14 @@ public class InventoryManager : MonoBehaviour
 
   private void UpdateInventoryUi()
   {
-    Image imageSlot_1 = slotList[0].transform.Find("Image")?.GetComponent<Image>();
-    Image imageSlot_2 = slotList[1].transform.Find("Image")?.GetComponent<Image>();
+    Item[] inventory = Inventory.GetInventory();
 
-    Sprite img1 = Resources.Load<Sprite>("Sprites/spade");
-    Sprite img2 = Resources.Load<Sprite>("Sprites/stone");
-
-    imageSlot_1.sprite = img1;
-    imageSlot_2.sprite = img2;
+    int cnt = 0;
+    foreach (GameObject slot in slotList)
+    {
+      Image imageSlot = slot.transform.Find("Image")?.GetComponent<Image>();
+      imageSlot.sprite = Resources.Load<Sprite>($"Sprites/{inventory[cnt].ItemName}");
+      cnt++;
+    }
   }
 }
