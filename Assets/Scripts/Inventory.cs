@@ -109,5 +109,13 @@ namespace Inventario
 
       return HowMuchQuantity;
     }
+
+    public static void MoveItemToSlot(string draggedImageTag)
+    {
+      string numberInString = draggedImageTag.Substring(5);
+      int draggedSlotNumber = int.Parse(numberInString);
+
+      UnityEngine.Debug.Log(draggedSlotNumber);
+    }
   }
 }
